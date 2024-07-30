@@ -3,18 +3,29 @@ import User from '../models/userModel.js';
 import passport from "passport";
 import GoogleStrategy from 'passport-google-oauth20';
 
+// Initialize router
 const router = express.Router();
 
-// Google OAuth
+// Google OAuth route
 router.get("/auth/google", passport.authenticate("google", {
     scope: ["profile", "email"],
 }))
 
+// Google OAuth callback route
 router.get("/auth/google/shelfswap", passport.authenticate("google", {
-    successRedirect: "/profile",
-    failureRedirect: "/login",
+    successRedirect: "/home",
+    failureRedirect: "/auth/google",
 }))
 
+// Logout route
+router.get("/logout", (req, res) => {
+    req.logout((err) => {
+        console.log(err);
+        res.redirect("/");
+    });
+});
+
+// Configure Google OAuth strategy for Passport
 passport.use("google", new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -40,6 +51,7 @@ passport.use("google", new GoogleStrategy({
                 lname: profile.name.familyName,
                 email: profile.emails[0].value,
             });
+            // Save the new user to the database
             await user.save();
         }
         cb(null, user);
