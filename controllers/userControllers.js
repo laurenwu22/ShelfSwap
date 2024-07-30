@@ -1,4 +1,0 @@
-
-// GET user
-
-// POST user

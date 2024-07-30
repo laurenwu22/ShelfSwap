@@ -5,8 +5,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from "body-parser";
 import userRoutes from './routes/userRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
 import session from 'express-session';
 import passport from "passport";
+import MongoStore from 'connect-mongo';
+import User from './models/userModel.js';
+import cors from 'cors';
 
 // Get filepath to public directory
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,65 +24,73 @@ connectDB();
 
 const app = express();
 
-// Middleware to parse user input data
+// Middleware to parse user request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Middleware to parse JSON
 app.use(express.json());
+
+// CORS configuration
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 // Middleware to set up session
 app.use(session({
+    name: 'ShelfSwap',
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        collectionName: 'sessions',
+    }),
     secret: process.env.SESSION_SECRET,
-    resave: false, // lookup using express-session with mongodb
-    saveUninitialized: true
+    resave: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    saveUninitialized: true,
 }));
 
+// Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Passport serialize and deserialize user
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+  
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});
 
 // Connect user routes
 app.use('/api/users', userRoutes);
 
+// Connect book routes
+app.use('/api/books', bookRoutes);
+
 // Process HTTP requests
 app.get("/", (req, res) => {
-    res.sendFile(publicDir + "/index.html");
+    if (req.isAuthenticated()) {
+        res.redirect("/home");
+    } else {
+        res.sendFile(publicDir + "/index.html");
+    }
 });
 
 // Get Profile
-app.get("/profile", (req, res) => {
+app.get("/home", (req, res) => {
     if (req.isAuthenticated()) {
-        res.send("hi");
+        res.sendFile(publicDir + "/loggedin.html");
     } else {
-        res.send("bye");
-        // res.redirect("/login");
+        res.redirect("/api/users/auth/google");
     }
 })
-
-// Explore Books in Database
-
-// Sign In/Sign Up a User
-
-// View A Book
-
-// Request a Swap
-
-// Post a Book
-
-// Delete a Book
-
-// 
-
-app.post("/submit", (req, res) => {
-    res.send('Welcome ' + req.body["username"]);
-} )
-
-passport.serializeUser((user, cb) => {
-    cb(null, user);
-});
-
-passport.deserializeUser((user, cb) => {
-    cb(null, user);
-});
 
 // Create server
 const port = process.env.PORT;
