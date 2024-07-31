@@ -9,7 +9,7 @@ function Header() {
                     <li><img src={logo} className="logo" alt="logo" /></li>
                     <li><h1>ShelfSwap</h1></li>
                     <li className="spacer"></li>
-                    <li className="button">Sign In</li>
+                    <li><button>Sign In</button></li>
                 </ul>
             </nav>
         </header>

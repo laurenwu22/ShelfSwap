@@ -69,14 +69,14 @@ app.use('/api/users', userRoutes);
 // Connect book routes
 app.use('/api/books', bookRoutes);
 
-// Process HTTP requests
-app.get("/", (req, res) => {
-    if (req.isAuthenticated()) {
-        res.redirect("/home");
-    } else {
-        res.sendFile(publicDir + "/index.html");
-    }
-});
+// // Process HTTP requests
+// app.get("/", (req, res) => {
+//     if (req.isAuthenticated()) {
+//         res.redirect("/home");
+//     } else {
+//         res.sendFile(publicDir + "/index.html");
+//     }
+// });
 
 // Get Profile
 app.get("/home", (req, res) => {
