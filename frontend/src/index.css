@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+  }
+
+nav {
+    width: 100%;
+    padding: 5px 48px;
+}
+
+nav h1 {
+    font-size: 32px;
+    color: #e76f51;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+nav .spacer {
+    flex-grow: 1;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 12px 40px;
+    border-radius: 2em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 450;
+    text-align: center;
+    background-color: #264653;
+    color: #ffffff;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #264653;
+    
+}
+
+.button img {
+    height: 20px;
+    padding-right: 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #264653;
+    transition: all 0.3s ease;
+}
+
+.logo {
+    width: 60px;
+    display: inline-block;
+}
+
+.hero-image {
+    background-image: url("./images/banner-img.png");
+    height: 700px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+.hero-content {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hero-content h1 {
+    color: #E9C46A;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 64px;
+}
+
+.hero-content h2 {
+    color: #ffffff;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    white-space: nowrap;
+}
+
+.hero-content .button {
+    background-color: #2A9D8F;
+    margin: 32px 20px 0;
+    padding: 16px;
+    width: 180px;
+    border-color: #2A9D8F;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.hero-content .button:hover {
+    background-color: transparent;
+    cursor: pointer;
+    color: #ffffff;
+    border-color: #ffffff;
+}

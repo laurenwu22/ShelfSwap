@@ -2,9 +2,14 @@ import express from 'express';
 import Book from "../models/bookModel.js"
 import axios from "axios";
 import User from '../models/userModel.js';
+import bodyParser from "body-parser";
 
 // Initialize router
 const router = express.Router();
+
+// Middleware to parse user request bodies
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.json());
 
 // Route to find books matching user input
 router.post("/search", async (req, res) => {
@@ -18,10 +23,6 @@ router.post("/search", async (req, res) => {
     } catch(error) {
         console.error("Failed to make request:", error.message);
     }
-})
-
-router.get("/user", async (req, res) => {
-    console.log(req.user);
 })
 
 // Route to add book to user's listings
@@ -42,6 +43,7 @@ router.post("/list", async (req, res) => {
             description: info.description,
             covers: info.imageLinks,
             categories: info.categories,
+            industryIdentifiers: info.industryIdentifiers,
             ownerNotes: notes || "",
             owner: req.user.id,
             status: "Available",
@@ -88,9 +90,29 @@ router.get("/", async (req, res) => {
     } catch(error) {
         console.error("Failed to make request:", error.message);
     }
-})
+}) 
 
 // Route to find books matching user input
+// Route to get all books
+router.get("/search/:q", async (req, res) => {
+    try {
+        const query = req.params.q;
+        const regex = new RegExp(query, 'i');
+        const books = await Book.find({
+            $or: [
+                { title: { $regex: regex } },
+                { authors: { $regex: regex } },
+                { categories: { $regex: regex } },
+                { 'industryIdentifiers.identifier': { $regex: regex }},
+            ]
+        })
+        console.log(books);
+        res.json(books);
+    } catch(error) {
+        console.error("Failed to make request:", error.message);
+        res.status(500).send("An error occurred while searching for books");
+    }
+}) 
 
 // Route to swap books
 
