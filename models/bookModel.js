@@ -8,7 +8,10 @@ const bookSchema = new mongoose.Schema(
         authors: [String],
         publisher: String,
         published: String,
-        isbn: String,
+        industryIdentifiers: [{
+            type: String,
+            identifier: String
+        }],
         pages: Number,
         description: String,
         covers: {
