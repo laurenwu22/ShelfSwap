@@ -12,15 +12,16 @@ export const getBooks = async () => {
     }
 };
 
-export const getBookById = async (id) => {
+export const getBookByQuery = async (id) => {
   const response = await axios.get(`${API_URL}/search/${id}`);
   return response.data;
 };
 
-// export const createBook = async (bookData) => {
-//   const response = await axios.post(API_URL, bookData);
-//   return response.data;
-// };
+export const postBook = async (bookData) => {
+  console.log(bookData);
+  const response = await axios.post(`${API_URL}/list`, bookData, { withCredentials: true });
+  return response.data;
+};
 
 // export const updateBook = async (id, bookData) => {
 //   const response = await axios.put(`${API_URL}/${id}`, bookData);

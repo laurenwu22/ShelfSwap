@@ -2,7 +2,7 @@ import React from "react";
 import searchIcon from "../images/search.svg"
 
 // Search Bar Component
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, placeholder }) {
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -15,7 +15,7 @@ function SearchBar({ onSearch }) {
             <input
                 type="text"
                 name="query"
-                placeholder="Search by Tile, Author, Genre, or ISBN"
+                placeholder={placeholder}
             />
             <input type="image" alt="search" src={searchIcon}/>
         </form>

@@ -25,10 +25,14 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: [
+        'http://localhost:3000',
+        'http://192.168.0.19:3000',
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    credentials: true,
 }));
+
 
 // Middleware to set up session
 app.use(session({
@@ -68,24 +72,6 @@ app.use('/api/users', userRoutes);
 
 // Connect book routes
 app.use('/api/books', bookRoutes);
-
-// // Process HTTP requests
-// app.get("/", (req, res) => {
-//     if (req.isAuthenticated()) {
-//         res.redirect("/home");
-//     } else {
-//         res.sendFile(publicDir + "/index.html");
-//     }
-// });
-
-// Get Profile
-app.get("/home", (req, res) => {
-    if (req.isAuthenticated()) {
-        res.sendFile(publicDir + "/loggedin.html");
-    } else {
-        res.redirect("/api/users/auth/google");
-    }
-})
 
 // Create server
 const port = process.env.PORT;

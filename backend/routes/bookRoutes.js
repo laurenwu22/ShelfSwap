@@ -33,6 +33,7 @@ router.post("/list", async (req, res) => {
         const response = await axios.get(
             `https://www.googleapis.com/books/v1/volumes/${book_id}`
         );
+        const user = await User.findById(req.user.id);
         const info = response.data.volumeInfo;
         const book = new Book({
             title: info.title,
@@ -45,18 +46,16 @@ router.post("/list", async (req, res) => {
             categories: info.categories,
             industryIdentifiers: info.industryIdentifiers,
             ownerNotes: notes || "",
-            owner: req.user.id,
+            owner: user._id,
+            username: user.username,
             status: "Available",
         });
         await book.save();
 
         // Update user's listings
-        const user = await User.findById(req.user.id);
         user.booksOwned.push(book.id);
         await user.save();
 
-        // Redirect back to homepage
-        res.status(201).redirect('/');
     } else {
         res.redirect("/api/users/auth/google");
     }
@@ -85,7 +84,7 @@ router.delete("/", async (req, res) => {
 // Route to get all books
 router.get("/", async (req, res) => {
     try {
-        const books = await Book.find();
+        const books = await Book.find().sort({ _id: -1 });
         res.json(books);
     } catch(error) {
         console.error("Failed to make request:", error.message);
@@ -103,9 +102,10 @@ router.get("/search/:q", async (req, res) => {
                 { title: { $regex: regex } },
                 { authors: { $regex: regex } },
                 { categories: { $regex: regex } },
-                { 'industryIdentifiers.identifier': { $regex: regex }},
+                { username: { $regex: regex } },
+                // { industryIdentifiers.identifier: { $regex: regex }},
             ]
-        })
+        }).sort({ _id: -1 })
         console.log(books);
         res.json(books);
     } catch(error) {
@@ -116,6 +116,18 @@ router.get("/search/:q", async (req, res) => {
 
 // Route to swap books
 
-// Route to 
+
+// Route to get one book
+router.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const book = await Book.findById(book_id);
+        console.log(book);
+        res.json(book);
+    } catch(error) {
+        console.error("Failed to make request:", error.message);
+        res.status(500).send("An error occurred while searching");
+    }
+}) 
 
 export default router;

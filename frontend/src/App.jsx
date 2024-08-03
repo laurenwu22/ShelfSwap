@@ -1,15 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
+import { AuthProvider } from './context/UserContext';
 
 function App() {
   return (
         <Router>
-        <div>
-            <Routes>
-                <Route index element={<HomePage />} />
-            </Routes>
-        </div>
+            <AuthProvider>
+                <Routes>
+                    <Route index element={<HomePage />} />
+                    <Route path="/post" element={<PostPage />} />
+                </Routes>
+            </AuthProvider>
         </Router>
   );
 }

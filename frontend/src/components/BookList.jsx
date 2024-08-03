@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getBookById, getBooks } from "../services/bookService";
+import { getBookByQuery, getBooks } from "../services/bookService";
 import SearchBar from "./SearchBar";
-
-// Book Component
-function Book({ id, img, title }) {
-  return (
-    <div className="book" id={id}>
-      <img src={img} alt={title} />
-    </div>
-  );
-}
+import Book from "./Book";
 
 // BookList Component
 function BookList() {
@@ -31,7 +23,7 @@ function BookList() {
 
   async function searchBooks(query) {
     try {
-        const books = await getBookById(query);
+        const books = await getBookByQuery(query);
         setBooks(books);
     } catch (error) {
         console.error("Error updating books:", error);
@@ -41,14 +33,18 @@ function BookList() {
   return (
     <div className="book-list">
       <h1>Explore Books</h1>
-      <SearchBar onSearch={searchBooks}/>
+      <SearchBar 
+        onSearch={searchBooks}
+        placeholder="Search by Title, Author, Genre, or Username"
+      />
       <div className="books-container">
       {books.map((book) => (
         <Book
-          key={book.id}
-          id={book.id}
+          key={book._id}
+          id={book._id}
           img={book.covers.thumbnail}
           title={book.title}
+          username={book.username}
         />
       ))}
       </div>
