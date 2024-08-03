@@ -9,8 +9,12 @@ const bookSchema = new mongoose.Schema(
         publisher: String,
         published: String,
         industryIdentifiers: [{
-            type: String,
-            identifier: String
+            type: {
+                type: String,
+            },
+            identifier: {
+                type: String,
+            }
         }],
         pages: Number,
         description: String,
@@ -25,6 +29,7 @@ const bookSchema = new mongoose.Schema(
         categories: [String],
         ownerNotes: String,
         owner: ObjectId,
+        username: String,
         status: String,
     }
 );

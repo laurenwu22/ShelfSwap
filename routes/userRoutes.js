@@ -13,7 +13,7 @@ router.get("/auth/google", passport.authenticate("google", {
 
 // Google OAuth callback route
 router.get("/auth/google/shelfswap", passport.authenticate("google", {
-    successRedirect: "/home",
+    successRedirect: "http://localhost:3000",
     failureRedirect: "/auth/google",
 }))
 
@@ -25,11 +25,20 @@ router.get("/logout", (req, res) => {
     });
 });
 
+// Route to get the current user
+router.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json(req.user);
+    } else {
+        res.status(401).json({ error: 'User not authenticated' });
+    }
+});
+
 // Configure Google OAuth strategy for Passport
 passport.use("google", new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/api/users/auth/google/shelfswap",
+    callbackURL: "http://localhost:2222/api/users/auth/google/shelfswap",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
 }, async (accessToken, refreshToken, profile, cb) => {
     console.log(profile);
