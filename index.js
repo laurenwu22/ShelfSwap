@@ -3,6 +3,7 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import bodyParser from "body-parser";
 import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 import session from 'express-session';
@@ -23,7 +24,12 @@ connectDB();
 
 const app = express();
 
-// CORS configuration
+// Middleware to parse user input data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Middleware to parse JSON
+app.use(express.json());
+
 app.use(cors({
     origin: [
         'http://localhost:3000',
