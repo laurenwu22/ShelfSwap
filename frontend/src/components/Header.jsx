@@ -12,8 +12,12 @@ function Header() {
             <header>
                 <nav>
                     <ul>
-                        <li><img src={logo} className="logo" alt="logo" /></li>
-                        <li><h1>ShelfSwap</h1></li>
+                        <li>
+                            <NavLink to="/">
+                                <img src={logo} className="logo" alt="logo" />
+                                <h1>ShelfSwap</h1>
+                            </NavLink>
+                        </li>
                         <li className="spacer"></li>
                         <li><button>Sign In</button></li>
                     </ul>
@@ -25,8 +29,12 @@ function Header() {
             <header>
                 <nav>
                     <ul>
-                        <li><img src={logo} className="logo" alt="logo" /></li>
-                        <li><h1>ShelfSwap</h1></li>
+                        <li>
+                            <NavLink to="/">
+                                <img src={logo} className="logo" alt="logo" />
+                                <h1>ShelfSwap</h1>
+                            </NavLink>
+                        </li>
                         <li className="spacer"></li>
                         <li>
                             <NavLink to="/">Browse</NavLink>

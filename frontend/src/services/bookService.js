@@ -18,10 +18,25 @@ export const getBookByQuery = async (id) => {
 };
 
 export const postBook = async (bookData) => {
-  console.log(bookData);
-  const response = await axios.post(`${API_URL}/list`, bookData, { withCredentials: true });
-  return response.data;
+  try {
+    const response = await axios.post(`${API_URL}/list`, bookData, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting book:', error);
+    throw error;
+  }
 };
+
+
+export const searchGoogleBooks = async (query) => {
+    const response = await axios.post(`${API_URL}/search`, query);
+    return response.data;
+}
+
+export const selectBook = async (id) => {
+    const response = await axios.get(`${API_URL}/find/id`);
+    return response.data;
+}
 
 // export const updateBook = async (id, bookData) => {
 //   const response = await axios.put(`${API_URL}/${id}`, bookData);

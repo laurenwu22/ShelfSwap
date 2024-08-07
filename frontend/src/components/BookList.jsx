@@ -32,21 +32,25 @@ function BookList() {
 
   return (
     <div className="book-list">
-      <h1>Explore Books</h1>
+      <h1 className="page-title">Explore Books</h1>
       <SearchBar 
         onSearch={searchBooks}
         placeholder="Search by Title, Author, Genre, or Username"
       />
       <div className="books-container">
-      {books.map((book) => (
-        <Book
-          key={book._id}
-          id={book._id}
-          img={book.covers.thumbnail}
-          title={book.title}
-          username={book.username}
-        />
-      ))}
+      {books && books.length > 0 && books.map((book) => {
+            const img = book.covers?.small || book.covers?.thumbnail;
+            console.log('img:', img);
+            return (
+                <Book
+                    key={book._id}
+                    id={book._id}
+                    img={img}
+                    title={book.title}
+                    username={book.username}
+                />
+            );
+        })}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ router.post("/search", async (req, res) => {
     try {
         const book_query = req.body.book;
         const response = await axios.get(
-            `https://www.googleapis.com/books/v1/volumes?q=${book_query}`
+            `https://www.googleapis.com/books/v1/volumes?q=${book_query}&printType=books`
         );
         const result = response.data;
         res.json(result);
@@ -55,6 +55,9 @@ router.post("/list", async (req, res) => {
         // Update user's listings
         user.booksOwned.push(book.id);
         await user.save();
+        
+        // Send response to the client
+        res.status(200).json({ message: "Book added successfully", book });
 
     } else {
         res.redirect("/api/users/auth/google");
@@ -92,7 +95,6 @@ router.get("/", async (req, res) => {
 }) 
 
 // Route to find books matching user input
-// Route to get all books
 router.get("/search/:q", async (req, res) => {
     try {
         const query = req.params.q;
@@ -117,7 +119,7 @@ router.get("/search/:q", async (req, res) => {
 // Route to swap books
 
 
-// Route to get one book
+// Route to get one book from database
 router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -129,5 +131,19 @@ router.get("/:id", async (req, res) => {
         res.status(500).send("An error occurred while searching");
     }
 }) 
+
+// Route to get one book from Google Books API
+router.get("/find/:id", async (req, res) => {
+    try {
+        const book_id = req.body.id;
+        const response = await axios.get(
+            `https://www.googleapis.com/books/v1/volumes/${book_id}`
+        );
+        const result = response.data;
+        res.json(result);
+    } catch(error) {
+        console.error("Failed to make request:", error.message);
+    }
+})
 
 export default router;
