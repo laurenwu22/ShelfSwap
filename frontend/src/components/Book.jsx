@@ -8,12 +8,13 @@ function Book({ id, img, title, username }) {
     const navigate = useNavigate();
 
     function handleBookClick() {
-        navigate(`${id}`);
+        navigate(`/book/${id}`);
     }
 
     return (
         <div className="book">
             <img src={img} alt={title} onClick={handleBookClick}/>
+            <h2>{title}</h2>
             <p>@{username}</p>
         </div>
     );

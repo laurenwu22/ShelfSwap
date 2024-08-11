@@ -65,20 +65,24 @@ router.post("/list", async (req, res) => {
 })
 
 // Route to delete a book
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         // Get relevant book and user data
-        const book_id = req.body.id;
+        const book_id = req.params.id;
         const book = await Book.findById(book_id);
         const user = await User.findById(book.owner);
 
         // Update user's books and delete book frob db
-        user.booksOwned.remove(book.id);
+        user.booksOwned.pull(book_id);
         await user.save();
 
-        Book.deleteOne(book);
-        await book.save();
-
+        Book.deleteOne({ _id: book_id }).then(function(){
+            console.log("Data deleted");
+        }).catch(function(error){
+            console.log(error);
+        });
+        
+        res.status(200).json({ message: "Book deleted successfully", book });
     } catch(error) {
         console.error("Failed to make request:", error.message);
     }
@@ -123,8 +127,7 @@ router.get("/search/:q", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const book = await Book.findById(book_id);
-        console.log(book);
+        const book = await Book.findById(id);
         res.json(book);
     } catch(error) {
         console.error("Failed to make request:", error.message);

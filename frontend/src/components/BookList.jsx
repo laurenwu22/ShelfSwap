@@ -40,7 +40,6 @@ function BookList() {
       <div className="books-container">
       {books && books.length > 0 && books.map((book) => {
             const img = book.covers?.small || book.covers?.thumbnail;
-            console.log('img:', img);
             return (
                 <Book
                     key={book._id}

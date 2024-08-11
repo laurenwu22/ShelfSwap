@@ -31,7 +31,6 @@ function PostPage() {
             id: form_info.id.value,
             notes: form_info.notes.value
         };
-        console.log('Submitting book info:', info);
     
         try {
             await postBook(info);

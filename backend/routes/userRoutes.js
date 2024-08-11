@@ -20,9 +20,9 @@ router.get("/auth/google/shelfswap", passport.authenticate("google", {
 // Logout route
 router.get("/logout", (req, res) => {
     req.logout((err) => {
-        console.log(err);
-        res.redirect("/");
+        console.log(`Error logging out: ${err}`);
     });
+    res.status(200).json({ message: 'Successfully logged out' });
 });
 
 // Route to get the current user
@@ -48,7 +48,6 @@ passport.use("google", new GoogleStrategy({
 
         // If the user exists, sign in
         if (existingUser) {
-            console.log(`Hi, ${existingUser.fname} ${existingUser.lname}!`);
             return cb(null, existingUser);
         }
 
@@ -68,5 +67,16 @@ passport.use("google", new GoogleStrategy({
         cb(err);
     }
 }));
+
+// Route to get the current user
+router.get('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findOne({ _id: id });
+        res.status(200).json(user);
+    } catch (err) {
+        console.error(`Error fetching user: ${err}`);
+    }
+});
 
 export default router;

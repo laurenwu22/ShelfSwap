@@ -38,12 +38,27 @@ export const selectBook = async (id) => {
     return response.data;
 }
 
+export const getBookById = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/${id}`);
+        return response.data;
+      } catch (error) {
+        console.error('Error finding book in database:', error);
+        throw error;
+    }
+}
+
 // export const updateBook = async (id, bookData) => {
 //   const response = await axios.put(`${API_URL}/${id}`, bookData);
 //   return response.data;
 // };
 
-// export const deleteBook = async (id) => {
-//   const response = await axios.delete(`${API_URL}/${id}`);
-//   return response.data;
-// };
+export const deleteBook = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    throw error;
+  }
+};

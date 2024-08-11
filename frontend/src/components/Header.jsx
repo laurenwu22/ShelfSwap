@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../logo.svg";
 import { useAuth } from "../context/UserContext";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+// function profileHover() {
+
+// }
 
 function Header() {
 
-    const { user } = useAuth();   
+    const { user, signIn, signOut } = useAuth(); 
+    const [isOpen, setIsOpen] = useState(false);  
+    const navigate = useNavigate();
+
+    const handleMouseEnter = () => {
+        setIsOpen(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsOpen(false);
+    };
+
+    async function handleSignOut() {
+        await signOut();
+        navigate("/");
+    }
 
     if (!user) {
         return (
@@ -19,7 +38,7 @@ function Header() {
                             </NavLink>
                         </li>
                         <li className="spacer"></li>
-                        <li><button>Sign In</button></li>
+                        <li><button onClick={signIn}>Sign In</button></li>
                     </ul>
                 </nav>
             </header>
@@ -45,9 +64,19 @@ function Header() {
                         <li>
                             <NavLink to="/swap">Swap</NavLink>
                         </li>
-                        <li><button className="profile-but">
-                            <div className="profile-icon"/>{user.fname}
-                        </button></li>
+                        <li>
+                            <div 
+                                className="dropdown"
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <button className="dropbtn"><div className="profile-icon"/>{user.fname}</button>
+                                <div className={`dropdown-content ${isOpen ? 'show' : ''}`}>
+                                    <a href={`/user/${user._id}`}>View Profile</a>
+                                    <p onClick={handleSignOut}>Sign Out</p>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </nav>
             </header>

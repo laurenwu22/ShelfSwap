@@ -29,3 +29,13 @@ export const googleSignOut = async () => {
         throw error;
     }
 };
+
+export const getUserById = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/id`);
+        return response.data;
+    } catch (error) {
+        console.error(`Error finding user with id: ${id}:`, error);
+        throw error;
+    }
+}
