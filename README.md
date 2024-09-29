@@ -12,18 +12,21 @@ books in a secure and easy-to-use platform.
 
 💻 Tech Stack
 
-Frontend:
-    - React: For building dynamic and responsive user interfaces.
-
-Backend:
-    - Node.js: Handles server-side operations.
-    - Express: Simplifies the creation of routes and backend logic.
-    - MongoDB: A NoSQL database for storing user and book data.
-APIs:
-    - Google Books API: Enables book search and retrieval of book details.
-    - Custom API: For managing book listings, user interactions, and
-    swap functionalities.
+    Frontend:
+        - React: For building dynamic and responsive user interfaces.
+    
+    Backend:
+        - Node.js: Handles server-side operations.
+        - Express: Simplifies the creation of routes and backend logic.
+        - MongoDB: A NoSQL database for storing user and book data.
+        
+    APIs:
+        - Google Books API: Enables book search and retrieval of book details.
+        - Custom API: For managing book listings, user interactions, and
+        swap functionalities.
+    
 User Authentication:
+
     - Google OAuth: Provides secure user login with Google accounts.
 
 🎨 Design Process
