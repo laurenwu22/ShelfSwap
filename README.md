@@ -5,10 +5,11 @@ books in a secure and user-friendly platform.
 
 🌟 Features
 
-    Search for books by title, author, or ISBN using the Google Books API.
-    Create and manage user profiles with Google OAuth authentication.
-    List available books for swapping and browse books posted by other users.
-    Connect with users directly to initiate and complete book swaps.
+    - Search for books by title, author, or ISBN using the Google Books API.
+    - Create and manage user profiles with Google OAuth authentication.
+    - List available books for swapping and browse books posted by other users.
+    - Connect with others in the Tufts community to initiate and complete book
+    swaps.
 
 💻 Tech Stack
 
