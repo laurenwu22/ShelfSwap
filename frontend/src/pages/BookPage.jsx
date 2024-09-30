@@ -36,6 +36,10 @@ function BookPage() {
         }
     }
 
+    function handleUserClick() {
+        navigate(`/user/${book.owner}`);
+    }
+
     if (loading || !book) {
         return <Spinner />;
     }
@@ -63,7 +67,7 @@ function BookPage() {
                     <p>Pages: <span className="info">{book.pages || "Not found"}</span></p>
                 </div>
                 <div className="title-container">
-                    <h2>@{book.username}</h2>
+                    <h2 onClick={handleUserClick}>@{book.username}</h2>
                     <h1>{book.title}</h1>
                     <h3>
                     by {book.authors.length === 1 

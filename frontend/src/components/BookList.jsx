@@ -46,6 +46,7 @@ function BookList() {
                     id={book._id}
                     img={img}
                     title={book.title}
+                    owner={book.owner}
                     username={book.username}
                 />
             );

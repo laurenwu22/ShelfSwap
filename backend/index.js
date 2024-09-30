@@ -43,10 +43,10 @@ app.use(cors({
 // Middleware to set up session
 app.use(session({
     name: 'ShelfSwap',
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
-        collectionName: 'sessions',
-    }),
+    // store: MongoStore.create({
+    //     mongoUrl: process.env.MONGO_URI,
+    //     collectionName: 'sessions',
+    // }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     cookie: {

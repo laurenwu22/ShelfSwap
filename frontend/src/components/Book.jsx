@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 // Book Component
-function Book({ id, img, title, username }) {
+function Book({ id, img, title, owner, username }) {
 
     const navigate = useNavigate();
 
@@ -11,11 +11,15 @@ function Book({ id, img, title, username }) {
         navigate(`/book/${id}`);
     }
 
+    function handleUserClick() {
+        navigate(`/user/${owner}`);
+    }
+
     return (
         <div className="book">
             <img src={img} alt={title} onClick={handleBookClick}/>
             <h2>{title}</h2>
-            <p>@{username}</p>
+            <p onClick={handleUserClick}>@{username}</p>
         </div>
     );
 }

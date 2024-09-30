@@ -24,6 +24,7 @@ function Header() {
     async function handleSignOut() {
         await signOut();
         navigate("/");
+        window.location.reload();
     }
 
     if (!user) {
