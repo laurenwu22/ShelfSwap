@@ -2,6 +2,9 @@ ShelfSwap is a web application designed for Tufts University students to
 facilitate the swapping of used books within the community. It promotes
 sustainability and community by allowing users to connect and exchange
 books in a secure and user-friendly platform.
+![Login Page](./demo/shelfswap-login.png)
+![Explore Page](./demo/shelfswap-explore.jpg)
+![Login Page](./demo/shelfswap-post.png)
 
 🌟 Features
 
