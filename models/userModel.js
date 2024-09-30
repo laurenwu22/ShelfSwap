@@ -10,7 +10,13 @@ const userSchema = new mongoose.Schema(
         email: { type: String, required: true, unique: true },
         username: { type: String, unique: true },
         booksOwned: [ObjectId],
-        booksSwapped: [ObjectId]
+        booksSwapped: [ObjectId],
+        bio: [ 
+            {
+                question: String,
+                answer: String
+            }
+        ]
     }
 );
 
