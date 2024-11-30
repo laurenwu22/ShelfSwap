@@ -51,7 +51,8 @@ function BookPage() {
             <div className="book-info">
                 <div className="cover-container">
                     <img 
-                        src={book.covers?.medium || 
+                        src={book.covers?.large || 
+                            book.covers?.medium || 
                             book.covers?.small || 
                             book.covers?.thumbnail} 
                         alt={`${book.title} cover`}

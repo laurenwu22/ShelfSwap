@@ -27,42 +27,66 @@ router.post("/search", async (req, res) => {
 
 // Route to add book to user's listings
 router.post("/list", async (req, res) => {
-    if (req.isAuthenticated()) {
-        // Add book to db
-        const { id: book_id, notes } = req.body;
-        const response = await axios.get(
-            `https://www.googleapis.com/books/v1/volumes/${book_id}`
-        );
-        const user = await User.findById(req.user.id);
-        const info = response.data.volumeInfo;
-        const book = new Book({
-            title: info.title,
-            authors: info.authors,
-            publisher: info.publisher,
-            published: info.publishedDate,
-            pages: info.pageCount,
-            description: info.description,
-            covers: info.imageLinks,
-            categories: info.categories,
-            industryIdentifiers: info.industryIdentifiers,
-            ownerNotes: notes || "",
-            owner: user._id,
-            username: user.username,
-            status: "Available",
-        });
-        await book.save();
-
-        // Update user's listings
-        user.booksOwned.push(book.id);
-        await user.save();
-        
-        // Send response to the client
-        res.status(200).json({ message: "Book added successfully", book });
-
-    } else {
-        res.redirect("/api/users/auth/google");
-    }
-})
+        if (req.isAuthenticated()) {
+            try {
+                // Extract book details from request
+                const { id: book_id, notes } = req.body;
+    
+                // Fetch book information from Google Books API
+                const response = await axios.get(
+                    `https://www.googleapis.com/books/v1/volumes/${book_id}`
+                );
+    
+                // Retrieve the authenticated user
+                const user = await User.findById(req.user.id);
+    
+                // Extract book information
+                const info = response.data.volumeInfo;
+    
+                // Construct cover URLs
+                const covers = {
+                    thumbnail: `https://books.google.com/books/content?id=${book_id}&printsec=frontcover&img=1&zoom=5`,
+                    small: `https://books.google.com/books/content?id=${book_id}&printsec=frontcover&img=1&zoom=0`,
+                    medium: `https://books.google.com/books/content?id=${book_id}&printsec=frontcover&img=1&zoom=1`,
+                    large: `https://books.google.com/books/content?id=${book_id}&printsec=frontcover&img=1&zoom=2`,
+                };
+    
+                // Create a new Book document
+                const book = new Book({
+                    title: info.title,
+                    authors: info.authors,
+                    publisher: info.publisher,
+                    published: info.publishedDate,
+                    pages: info.pageCount,
+                    description: info.description,
+                    covers: covers,
+                    categories: info.categories,
+                    industryIdentifiers: info.industryIdentifiers,
+                    ownerNotes: notes || "",
+                    owner: user._id,
+                    username: user.username,
+                    status: "Available",
+                });
+    
+                // Save the book to the database
+                await book.save();
+    
+                // Update user's listings
+                user.booksOwned.push(book.id);
+                await user.save();
+    
+                // Send response to the client
+                res.status(200).json({ message: "Book added successfully", book });
+    
+            } catch (error) {
+                console.error("Error adding book:", error);
+                res.status(500).json({ message: "Error adding book", error });
+            }
+        } else {
+            res.redirect("/api/users/auth/google");
+        }
+});
+    
 
 // Route to delete a book
 router.delete("/:id", async (req, res) => {

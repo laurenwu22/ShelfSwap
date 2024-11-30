@@ -34,8 +34,8 @@ function BookList() {
     <div className="book-list">
       <h1 className="page-title">Explore Books</h1>
       <SearchBar 
-        onSearch={searchBooks}
-        placeholder="Search by Title, Author, Genre, or Username"
+          onSearch={searchBooks}
+          placeholder="Search by Title, Author, Genre, or Username"
       />
       <div className="books-container">
       {books && books.length > 0 && books.map((book) => {
