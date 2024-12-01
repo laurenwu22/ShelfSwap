@@ -13,7 +13,7 @@ router.get("/auth/google", passport.authenticate("google", {
 
 // Google OAuth callback route
 router.get("/auth/google/shelfswap", passport.authenticate("google", {
-    successRedirect: "https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/",
+    successRedirect: "http://localhost:3000",
     failureRedirect: "/auth/google",
 }))
 
@@ -64,6 +64,7 @@ passport.use("google", new GoogleStrategy({
         }
         cb(null, user);
     } catch (err) {
+        console.error('Error in Google Strategy:', error);
         cb(err);
     }
 }));
