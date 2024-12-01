@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:2222/api/users';
+const API_URL = 'https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/api/users/';
 
 export const getCurrentUser = async () => {
     try {

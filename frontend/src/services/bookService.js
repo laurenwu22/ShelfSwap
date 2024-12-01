@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:2222/api/books';
+const API_URL = 'https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/api/books/';
 
 export const getBooks = async () => {
     try {
