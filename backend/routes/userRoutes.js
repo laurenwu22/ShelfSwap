@@ -13,7 +13,7 @@ router.get("/auth/google", passport.authenticate("google", {
 
 // Google OAuth callback route
 router.get("/auth/google/shelfswap", passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
+    successRedirect: "https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/",
     failureRedirect: "/auth/google",
 }))
 
@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 passport.use("google", new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:2222/api/users/auth/google/shelfswap",
+    callbackURL: "https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/api/users/auth/google/shelfswap",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
 }, async (accessToken, refreshToken, profile, cb) => {
     console.log(profile);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/api/users/';
+const API_URL = 'https://shelfswap-backend-d1d8b8a07f87.herokuapp.com/api/users';
 
 export const getCurrentUser = async () => {
     try {
@@ -14,7 +14,7 @@ export const getCurrentUser = async () => {
 
 export const googleSignIn = () => {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    const redirectUri = 'http://localhost:2222/api/users/auth/google/shelfswap';
+    const redirectUri = `${API_URL}/auth/google/shelfswap`;
     const responseType = 'code';
     const scope = 'profile email';
 
