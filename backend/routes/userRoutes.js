@@ -11,11 +11,21 @@ router.get("/auth/google", passport.authenticate("google", {
     scope: ["profile", "email"],
 }))
 
+// // Google OAuth callback route
+// router.get("/auth/google/shelfswap", passport.authenticate("google", {
+//     successRedirect: "http://localhost:3000",
+//     failureRedirect: "/auth/google",
+// }))
+
 // Google OAuth callback route
-router.get("/auth/google/shelfswap", passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
-    failureRedirect: "/auth/google",
-}))
+router.get("/auth/google/shelfswap", (req, res, next) => {
+        console.log('Callback Query:', req.query);  // DEBUGGING
+        passport.authenticate("google", {
+            successRedirect: "http://localhost:3000",
+            failureRedirect: "/auth/google",
+        })(req, res, next);
+})
+
 
 // Logout route
 router.get("/logout", (req, res) => {
