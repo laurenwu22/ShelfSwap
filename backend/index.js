@@ -34,7 +34,7 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'http://192.168.0.19:3000',
-        process.env.ALLOWED_ORIGINS,
+        'https://the-shelf-swap-blue.vercel.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
