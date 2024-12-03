@@ -30,27 +30,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to parse JSON
 app.use(express.json());
 
-const allowedOrigins = [
-    process.env.ALLOWED_ORIGINS,
-    'http://localhost:3000',
-    'http://192.168.0.19:3000'
-];
-
 // app.use(cors({
-//     origin: (origin, callback) => {
-//         // Use the single origin or check for localhost in development
-//         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
+//     origin: [
+//         process.env.ALLOWED_ORIGINS,
+//         'http://localhost:3000',
+//         'http://192.168.0.19:3000',
+//     ],
 //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //     credentials: true,
 // }));
-
-app.use(cors());
-app.set('trust proxy', 1);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
 
 
 // Middleware to set up session
