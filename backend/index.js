@@ -30,26 +30,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to parse JSON
 app.use(express.json());
 
-app.use(cors({
-    origin: (origin, callback) => {
-        // Use the single origin or check for localhost in development
-        const allowedOrigin = process.env.ALLOWED_ORIGINS;
-        const allowedOrigins = [
-            allowedOrigin,   // From the environment variable
-            'http://localhost:3000', // For local development
-            'http://192.168.0.19:3000', // Another local development option
-        ];
+const allowedOrigins = [
+    process.env.ALLOWED_ORIGINS,
+    'http://localhost:3000',
+    'http://192.168.0.19:3000'
+];
 
-        // Allow the request if the origin is in the allowed list
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true); // Allow the request
-        } else {
-            callback(new Error('Not allowed by CORS')); // Reject the request
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         // Use the single origin or check for localhost in development
+//         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true,
+// }));
+
+app.use(cors());
 
 
 // Middleware to set up session
