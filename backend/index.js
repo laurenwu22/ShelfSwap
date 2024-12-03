@@ -50,6 +50,7 @@ const allowedOrigins = [
 // }));
 
 app.use(cors());
+app.set('trust proxy', 1);
 
 
 // Middleware to set up session
