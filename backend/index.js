@@ -40,6 +40,17 @@ app.use(cors({
     credentials: true,
 }));
 
+console.log('CORS setup complete with allowed origin:', process.env.ALLOWED_ORIGINS);
+
+app.use((req, res, next) => {
+    console.log('Request received from origin:', req.headers.origin);
+    console.log('Request headers:', req.headers);
+    console.log('Request method:', req.method);
+    console.log('Request URL:', req.originalUrl);
+    next();
+});
+
+
 // Middleware to set up session
 app.use(session({
     name: 'ShelfSwap',
