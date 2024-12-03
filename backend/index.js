@@ -24,6 +24,8 @@ connectDB();
 
 const app = express();
 
+app.use(cors());
+
 // Middleware to parse user input data
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -39,14 +41,6 @@ app.use(express.json());
 //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //     credentials: true,
 // }));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-});
-
 
 // Middleware to set up session
 app.use(session({
